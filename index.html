@@ -390,94 +390,83 @@
     </div>
 
     <script>
-        // --- KONFIGURASI PENTING ---
-        // Ganti URL di bawah ini dengan Web App URL dari Google Apps Script Anda
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxmJYE6oWTTuoBmWGNkxdRlIqU_M_Fy2QF9bt0jke9jMaZJsfep4CcefOxtMGEI49MD/exec'; 
+    // URL Google Apps Script
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxmJYE6oWTTuoBmWGNkxdRlIqU_M_Fy2QF9bt0jke9jMaZJsfep4CcefOxtMGEI49MD/exec';
 
-        const formRawatJalan = document.getElementById('formRawatJalan');
-        const formRawatInap = document.getElementById('formRawatInap');
-        const welcomeMessage = document.getElementById('welcomeMessage');
-        const btnRawatJalan = document.getElementById('showRawatJalan');
-        const btnRawatInap = document.getElementById('showRawatInap');
-        const modal = document.getElementById('statusModal');
+    const formRawatJalan = document.getElementById('formRawatJalan');
+    const formRawatInap = document.getElementById('formRawatInap');
+    const welcomeMessage = document.getElementById('welcomeMessage');
+    const btnRawatJalan = document.getElementById('showRawatJalan');
+    const btnRawatInap = document.getElementById('showRawatInap');
+    const modal = document.getElementById('statusModal');
 
-        // Toggle Form Visibility
-        function toggleForm(showRJ) {
-            welcomeMessage.style.display = 'none';
-            if (showRJ) {
-                formRawatJalan.classList.remove('hidden');
-                formRawatInap.classList.add('hidden');
-                btnRawatJalan.classList.add('active');
-                btnRawatInap.classList.remove('active');
-            } else {
-                formRawatInap.classList.remove('hidden');
-                formRawatJalan.classList.add('hidden');
-                btnRawatInap.classList.add('active');
-                btnRawatJalan.classList.remove('active');
-            }
+    // Toggle Form Visibility
+    function toggleForm(showRJ) {
+        welcomeMessage.style.display = 'none';
+
+        if (showRJ) {
+            formRawatJalan.classList.remove('hidden');
+            formRawatInap.classList.add('hidden');
+            btnRawatJalan.classList.add('active');
+            btnRawatInap.classList.remove('active');
+            formRawatJalan.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            formRawatInap.classList.remove('hidden');
+            formRawatJalan.classList.add('hidden');
+            btnRawatInap.classList.add('active');
+            btnRawatJalan.classList.remove('active');
+            formRawatInap.scrollIntoView({ behavior: 'smooth' });
         }
+    }
 
-        btnRawatJalan.addEventListener('click', () => toggleForm(true));
-        btnRawatInap.addEventListener('click', () => toggleForm(false));
+    btnRawatJalan.addEventListener('click', () => toggleForm(true));
+    btnRawatInap.addEventListener('click', () => toggleForm(false));
 
-        // Handle Submission Logic
-        function handleFormSubmit(e, formElement) {
-            e.preventDefault();
-            
-            if (scriptURL === 'https://script.google.com/macros/s/AKfycbxmJYE6oWTTuoBmWGNkxdRlIqU_M_Fy2QF9bt0jke9jMaZJsfep4CcefOxtMGEI49MD/exec' || scriptURL === '') {
-                showModal('error', 'Error Konfigurasi', 'URL Google Script belum dipasang di kode HTML ini.');
-                return;
-            }
+    // Handle Submission Logic
+    function handleFormSubmit(e, formElement) {
+        e.preventDefault();
 
-            const btn = formElement.querySelector('.btn-submit');
-            const originalText = btn.innerHTML;
-            
-            // Loading State
-            btn.disabled = true;
-            btn.innerHTML = 'Mengirim...';
+        const btn = formElement.querySelector('.btn-submit');
+        const originalText = btn.innerHTML;
 
-            fetch(scriptURL, { method: 'POST', body: new FormData(formElement)})
-                .then(response => {
-                    console.log('Success!', response);
-                    showModal('success', 'Terima Kasih!', 'Masukan Anda sangat berharga bagi peningkatan layanan kami.');
-                    formElement.reset();
-                })
-                .catch(error => {
-                    console.error('Error!', error.message);
-                    showModal('error', 'Gagal Mengirim', 'Maaf, terjadi kesalahan koneksi. Silakan coba lagi.');
-                })
-                .finally(() => {
-                    btn.disabled = false;
-                    btn.innerHTML = originalText;
-                });
-        }
+        // Loading State
+        btn.disabled = true;
+        btn.innerHTML = 'Mengirim...';
 
-        // Attach listeners
-        formRawatJalan.addEventListener('submit', (e) => handleFormSubmit(e, formRawatJalan));
-        formRawatInap.addEventListener('submit', (e) => handleFormSubmit(e, formRawatInap));
+        fetch(scriptURL, { method: 'POST', body: new FormData(formElement) })
+            .then(response => {
+                showModal('success', 'Terima Kasih!', 'Masukan Anda telah kami terima.');
+                formElement.reset();
+            })
+            .catch(error => {
+                showModal('error', 'Gagal Mengirim', 'Terjadi kesalahan. Silakan coba lagi.');
+            })
+            .finally(() => {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            });
+    }
 
-        // Modal Logic
-        function showModal(type, title, message) {
-            const icon = document.getElementById('modalIcon');
-            const titleEl = document.getElementById('modalTitle');
-            const msgEl = document.getElementById('modalMessage');
+    formRawatJalan.addEventListener('submit', (e) => handleFormSubmit(e, formRawatJalan));
+    formRawatInap.addEventListener('submit', (e) => handleFormSubmit(e, formRawatInap));
 
-            if (type === 'success') {
-                icon.innerText = '✅';
-                titleEl.style.color = 'var(--primary-color)';
-            } else {
-                icon.innerText = '⚠';
-                titleEl.style.color = 'red';
-            }
+    // Modal Logic
+    function showModal(type, title, message) {
+        const icon = document.getElementById('modalIcon');
+        const titleEl = document.getElementById('modalTitle');
+        const msgEl = document.getElementById('modalMessage');
 
-            titleEl.innerText = title;
-            msgEl.innerText = message;
-            modal.classList.add('active');
-        }
+        icon.innerText = type === 'success' ? '✅' : '⚠';
+        titleEl.style.color = type === 'success' ? 'var(--primary-color)' : 'red';
+        titleEl.innerText = title;
+        msgEl.innerText = message;
+        modal.classList.add('active');
+    }
 
-        function closeModal() {
-            modal.classList.remove('active');
-        }
-    </script>
+    function closeModal() {
+        modal.classList.remove('active');
+    }
+</script>
+
 </body>
 </html>
