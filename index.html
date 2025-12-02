@@ -6,11 +6,11 @@
     <title>Kritik & Saran - Klinik Asy-Syifa Husada</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Palet Warna Klinik: Hijau Teal (Aman, Sehat), Biru Muda (Tenang, Profesional) */
+        /* Palet Warna Klinik */
         :root {
-            --primary-color: #00796b; /* Hijau Teal Tua */
-            --secondary-color: #4db6ac; /* Hijau Teal Muda */
-            --background-color: #f0f8f7; /* Hampir Putih, Sedikit Hijau */
+            --primary-color: #00796b; 
+            --secondary-color: #4db6ac; 
+            --background-color: #f0f8f7; 
             --text-color: #333;
             --button-hover: #004d40;
             --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -27,11 +27,31 @@
         /* HEADER & HERO SECTION */
         header { 
             text-align: center; 
-            padding: 40px 20px 20px; /* Padding dikurangi di bawah karena logo */
+            padding: 40px 20px 20px; 
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
             box-shadow: var(--box-shadow);
             margin-bottom: 30px;
+        }
+        
+        .logo-container {
+            margin-bottom: 20px;
+        }
+
+        .logo-placeholder {
+            width: 100px;
+            height: 100px;
+            background-color: white;
+            border-radius: 50%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 40px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            border: 3px solid white;
         }
 
         header h1 {
@@ -68,20 +88,21 @@
             color: white; 
             border: none; 
             border-radius: 50px; 
-            transition: background-color 0.3s, transform 0.2s;
+            transition: all 0.3s ease;
             font-weight: 600;
             box-shadow: 0 4px 15px rgba(0, 121, 107, 0.4);
         }
 
-        .cta-buttons button:hover {
+        .cta-buttons button:hover, .cta-buttons button.active {
             background-color: var(--primary-color);
             transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 121, 107, 0.6);
         }
 
         /* FORM CONTAINER */
         .form-container { 
             max-width: 800px;
-            margin: 0 auto;
+            margin: 0 auto 50px auto;
             background-color: white; 
             padding: 40px; 
             border-radius: 12px; 
@@ -114,6 +135,7 @@
             border-radius: 8px; 
             box-sizing: border-box; 
             transition: border-color 0.3s, box-shadow 0.3s;
+            font-family: inherit;
         }
 
         input:focus, select:focus, textarea:focus {
@@ -126,8 +148,8 @@
             resize: vertical; 
         }
 
-        /* SUBMIT BUTTON */
-        .form-container button[type="submit"] {
+        /* SUBMIT BUTTON & LOADING */
+        .btn-submit {
             width: 100%;
             padding: 15px;
             background-color: var(--primary-color);
@@ -139,18 +161,90 @@
             cursor: pointer;
             margin-top: 20px;
             transition: background-color 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .form-container button[type="submit"]:hover {
+        .btn-submit:hover {
             background-color: var(--button-hover);
         }
 
+        .btn-submit:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
         .hidden { display: none; }
+
+        /* CUSTOM MODAL FOR MESSAGES */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-box {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-box {
+            transform: translateY(0);
+        }
+
+        .modal-icon {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+
+        .modal-title {
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .modal-close {
+            margin-top: 20px;
+            padding: 10px 25px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
     </style>
 </head>
 <body>
 
     <header>
+        <div class="logo-container">
+            <!-- Placeholder Logo -->
+            <div class="logo-placeholder">AH</div>
+        </div>
         <h1>Suara Anda Membangun Pelayanan Kami</h1>
         <p>Kami berkomitmen untuk memberikan layanan kesehatan terbaik. Kritik, saran, dan pujian Anda adalah energi bagi kami.</p>
     </header>
@@ -162,10 +256,19 @@
     </div>
 
     <div class="form-container">
+        
+        <!-- Pesan selamat datang default -->
+        <div id="welcomeMessage" style="text-align: center; color: #666; padding: 20px;">
+            <p>Silakan pilih kategori pasien di atas untuk mengisi formulir.</p>
+        </div>
 
-        <form id="formRawatJalan" class="hidden" action="/submit-pengaduan-rawat-jalan" method="POST" enctype="multipart/form-data">
+        <!-- FORM RAWAT JALAN -->
+        <form id="formRawatJalan" class="hidden" name="submit-to-google-sheet-rj">
             <h2>Formulir Masukan Pelayanan Rawat Jalan</h2>
             
+            <!-- Hidden Input untuk identifikasi di Apps Script -->
+            <input type="hidden" name="form_type" value="rawat_jalan">
+
             <div class="form-group">
                 <label for="rj_nama">Nama Lengkap (Opsional)</label>
                 <input type="text" id="rj_nama" name="nama" placeholder="Cth: Budi Santoso">
@@ -190,10 +293,12 @@
             
             <div class="form-group">
                 <label>Jenis Masukan <span style="color: red;">*</span></label>
-                <input type="radio" id="rj_kritik" name="jenis_masukan" value="Kritik/Keluhan" required>
-                <label for="rj_kritik" style="display: inline; font-weight: normal; margin-right: 15px;">Kritik/Keluhan</label>
-                <input type="radio" id="rj_saran" name="jenis_masukan" value="Saran/Pujian" required>
-                <label for="rj_saran" style="display: inline; font-weight: normal;">Saran/Pujian</label>
+                <div style="margin-top: 5px;">
+                    <input type="radio" id="rj_kritik" name="jenis_masukan" value="Kritik/Keluhan" required>
+                    <label for="rj_kritik" style="display: inline; font-weight: normal; margin-right: 15px;">Kritik/Keluhan</label>
+                    <input type="radio" id="rj_saran" name="jenis_masukan" value="Saran/Pujian" required>
+                    <label for="rj_saran" style="display: inline; font-weight: normal;">Saran/Pujian</label>
+                </div>
             </div>
 
             <div class="form-group">
@@ -206,21 +311,24 @@
                 <textarea id="rj_detail" name="detail" rows="6" maxlength="500" required placeholder="Jelaskan secara spesifik agar kami dapat menindaklanjuti."></textarea>
             </div>
             
-            <div class="form-group">
-                <label for="rj_bukti">Unggah Bukti Pendukung (Opsional)</label>
-                <input type="file" id="rj_bukti" name="bukti" accept="image/*, application/pdf">
-            </div>
+            <!-- Catatan: Upload file dihapus untuk versi Sheets ini karena memerlukan penanganan binary data yang kompleks -->
 
             <div class="form-group">
                 <input type="checkbox" id="rj_anonim" name="anonim">
-                <label for="rj_anonim" style="display: inline; font-weight: normal;">Kirim Masukan Secara **Anonim** (Tidak perlu dihubungi)</label>
+                <label for="rj_anonim" style="display: inline; font-weight: normal;">Kirim Masukan Secara *Anonim* (Tidak perlu dihubungi)</label>
             </div>
             
-            <button type="submit">Kirim Masukan Rawat Jalan</button>
+            <button type="submit" class="btn-submit">
+                <span class="btn-text">Kirim Masukan Rawat Jalan</span>
+            </button>
         </form>
 
-        <form id="formRawatInap" class="hidden" action="/submit-pengaduan-rawat-inap" method="POST" enctype="multipart/form-data">
+        <!-- FORM RAWAT INAP -->
+        <form id="formRawatInap" class="hidden" name="submit-to-google-sheet-ri">
             <h2>Formulir Masukan Pelayanan Rawat Inap</h2>
+
+            <!-- Hidden Input untuk identifikasi di Apps Script -->
+            <input type="hidden" name="form_type" value="rawat_inap">
             
             <div class="form-group">
                 <label for="ri_nama">Nama Pasien/Penanggung Jawab (Opsional)</label>
@@ -261,39 +369,115 @@
             
             <div class="form-group">
                 <input type="checkbox" id="ri_anonim" name="anonim">
-                <label for="ri_anonim" style="display: inline; font-weight: normal;">Kirim Masukan Secara **Anonim** (Tidak perlu dihubungi)</label>
+                <label for="ri_anonim" style="display: inline; font-weight: normal;">Kirim Masukan Secara *Anonim* (Tidak perlu dihubungi)</label>
             </div>
             
-            <button type="submit">Kirim Masukan Rawat Inap</button>
+            <button type="submit" class="btn-submit">
+                <span class="btn-text">Kirim Masukan Rawat Inap</span>
+            </button>
         </form>
 
     </div>
 
+    <!-- Custom Modal for Success/Error -->
+    <div id="statusModal" class="modal-overlay">
+        <div class="modal-box">
+            <div id="modalIcon" class="modal-icon">✅</div>
+            <div id="modalTitle" class="modal-title">Terima Kasih!</div>
+            <p id="modalMessage">Masukan Anda telah kami terima.</p>
+            <button class="modal-close" onclick="closeModal()">Tutup</button>
+        </div>
+    </div>
+
     <script>
+        // --- KONFIGURASI PENTING ---
+        // Ganti URL di bawah ini dengan Web App URL dari Google Apps Script Anda
+        const scriptURL = 'PASTE_WEB_APP_URL_ANDA_DISINI'; 
+
         const formRawatJalan = document.getElementById('formRawatJalan');
         const formRawatInap = document.getElementById('formRawatInap');
+        const welcomeMessage = document.getElementById('welcomeMessage');
         const btnRawatJalan = document.getElementById('showRawatJalan');
         const btnRawatInap = document.getElementById('showRawatInap');
+        const modal = document.getElementById('statusModal');
 
-        function toggleActiveButton(activeBtn, inactiveBtn) {
-            activeBtn.style.backgroundColor = 'var(--primary-color)';
-            inactiveBtn.style.backgroundColor = 'var(--secondary-color)';
+        // Toggle Form Visibility
+        function toggleForm(showRJ) {
+            welcomeMessage.style.display = 'none';
+            if (showRJ) {
+                formRawatJalan.classList.remove('hidden');
+                formRawatInap.classList.add('hidden');
+                btnRawatJalan.classList.add('active');
+                btnRawatInap.classList.remove('active');
+            } else {
+                formRawatInap.classList.remove('hidden');
+                formRawatJalan.classList.add('hidden');
+                btnRawatInap.classList.add('active');
+                btnRawatJalan.classList.remove('active');
+            }
         }
 
-        btnRawatJalan.addEventListener('click', function() {
-            formRawatJalan.classList.remove('hidden');
-            formRawatInap.classList.add('hidden');
-            toggleActiveButton(btnRawatJalan, btnRawatInap);
-        });
+        btnRawatJalan.addEventListener('click', () => toggleForm(true));
+        btnRawatInap.addEventListener('click', () => toggleForm(false));
 
-        btnRawatInap.addEventListener('click', function() {
-            formRawatInap.classList.remove('hidden');
-            formRawatJalan.classList.add('hidden');
-            toggleActiveButton(btnRawatInap, btnRawatJalan);
-        });
+        // Handle Submission Logic
+        function handleFormSubmit(e, formElement) {
+            e.preventDefault();
+            
+            if (scriptURL === 'https://script.google.com/macros/s/AKfycbwHIrZ9q4-kOUZeykgrU25XZolGUXMj6dLYcT3vViVNqSbnrvNWIfmoeYA_pG8ubfvy/exec' || scriptURL === '') {
+                showModal('error', 'Error Konfigurasi', 'URL Google Script belum dipasang di kode HTML ini.');
+                return;
+            }
+
+            const btn = formElement.querySelector('.btn-submit');
+            const originalText = btn.innerHTML;
+            
+            // Loading State
+            btn.disabled = true;
+            btn.innerHTML = 'Mengirim...';
+
+            fetch(scriptURL, { method: 'POST', body: new FormData(formElement)})
+                .then(response => {
+                    console.log('Success!', response);
+                    showModal('success', 'Terima Kasih!', 'Masukan Anda sangat berharga bagi peningkatan layanan kami.');
+                    formElement.reset();
+                })
+                .catch(error => {
+                    console.error('Error!', error.message);
+                    showModal('error', 'Gagal Mengirim', 'Maaf, terjadi kesalahan koneksi. Silakan coba lagi.');
+                })
+                .finally(() => {
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
+                });
+        }
+
+        // Attach listeners
+        formRawatJalan.addEventListener('submit', (e) => handleFormSubmit(e, formRawatJalan));
+        formRawatInap.addEventListener('submit', (e) => handleFormSubmit(e, formRawatInap));
+
+        // Modal Logic
+        function showModal(type, title, message) {
+            const icon = document.getElementById('modalIcon');
+            const titleEl = document.getElementById('modalTitle');
+            const msgEl = document.getElementById('modalMessage');
+
+            if (type === 'success') {
+                icon.innerText = '✅';
+                titleEl.style.color = 'var(--primary-color)';
+            } else {
+                icon.innerText = '⚠';
+                titleEl.style.color = 'red';
+            }
+
+            titleEl.innerText = title;
+            msgEl.innerText = message;
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+        }
     </script>
 </body>
 </html>
-<form id="formRawatJalan" class="hidden" action="/submit-pengaduan-rawat-jalan" method="POST" enctype="multipart/form-data">
-    <form id="formRawatJalan" class="hidden" action="[MASUKKAN ENDPOINT URL FORMSPREE ANDA DI SINI]" method="POST" enctype="multipart/form-data">
-        <form id="formRawatInap" class="hidden" action="[MASUKKAN ENDPOINT URL FORMSPREE ANDA DI SINI]" method="POST" enctype="multipart/form-data">
