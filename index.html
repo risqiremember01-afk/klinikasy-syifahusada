@@ -6,13 +6,13 @@
     <title>Kritik & Saran - Klinik Asy-Syifa Husada</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Palet Warna Klinik */
+        /* Palet Warna Klinik BARU (Biru) */
         :root {
-            --primary-color: #00796b; 
-            --secondary-color: #4db6ac; 
-            --background-color: #f0f8f7; 
+            --primary-color: #004080; /* Biru Gelap/Navy */
+            --secondary-color: #5bc0de; /* Biru Cerah/Cyan */
+            --background-color: #e0f7fa; /* Biru Sangat Muda */
             --text-color: #333;
-            --button-hover: #004d40;
+            --button-hover: #00264d; /* Biru lebih gelap untuk hover */
             --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
@@ -28,6 +28,7 @@
         header { 
             text-align: center; 
             padding: 40px 20px 20px; 
+            /* Linear gradient menggunakan palet biru baru */
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
             box-shadow: var(--box-shadow);
@@ -47,11 +48,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--primary-color);
+            color: var(--primary-color); /* Tetap menggunakan primary color biru */
             font-weight: bold;
-            font-size: 40px;
+            font-size: 24px;
             box-shadow: 0 0 15px rgba(0,0,0,0.2);
             border: 3px solid white;
+            line-height: 1.2;
+            padding: 10px;
         }
 
         header h1 {
@@ -90,14 +93,25 @@
             border-radius: 50px; 
             transition: all 0.3s ease;
             font-weight: 600;
-            box-shadow: 0 4px 15px rgba(0, 121, 107, 0.4);
+            /* Box shadow menggunakan primary color biru */
+            box-shadow: 0 4px 15px rgba(0, 64, 128, 0.4);
         }
 
         .cta-buttons button:hover, .cta-buttons button.active {
             background-color: var(--primary-color);
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0, 121, 107, 0.6);
+             /* Box shadow menggunakan primary color biru */
+            box-shadow: 0 6px 20px rgba(0, 64, 128, 0.6);
         }
+        
+        @media (max-width: 600px) {
+            .cta-buttons button {
+                display: block;
+                width: 80%;
+                margin: 10px auto;
+            }
+        }
+
 
         /* FORM CONTAINER */
         .form-container { 
@@ -128,7 +142,7 @@
             color: var(--primary-color); 
         }
 
-        input[type="text"], input[type="date"], input[type="number"], select, textarea, input[type="file"] { 
+        input[type="text"], input[type="date"], input[type="number"], select, textarea { 
             width: 100%; 
             padding: 12px; 
             border: 1px solid #ccc; 
@@ -140,12 +154,17 @@
 
         input:focus, select:focus, textarea:focus {
             border-color: var(--secondary-color);
-            box-shadow: 0 0 5px rgba(77, 182, 172, 0.5);
+            /* Box shadow menggunakan secondary color biru */
+            box-shadow: 0 0 5px rgba(91, 192, 222, 0.5);
             outline: none;
         }
 
         textarea { 
             resize: vertical; 
+        }
+        
+        input[type="radio"] + label {
+            color: var(--text-color);
         }
 
         /* SUBMIT BUTTON & LOADING */
@@ -242,8 +261,7 @@
 
     <header>
         <div class="logo-container">
-            <!-- kotak Logo -->
-            <div class="logo-kotak">KLINIK ASY-SYIFA HUSADA TAKERAN MAGETAN</div>
+            <div class="logo-placeholder">ASYIFA HUSADA</div>
         </div>
         <h1>Kepuasan Anda Membangun Pelayanan Kami</h1>
         <p>PELAYANANKU ADALAH IBADAHKU SEMOGA LEKAS SEMBUH</p>
@@ -251,22 +269,19 @@
 
     <div class="cta-buttons">
         <h2>Pilih Jenis Pelayanan yang Anda Terima:</h2>
-        <button id="showRawatJalan">Pasien Rawat Jalan (Poliklinik)</button>
-        <button id="showRawatInap">Pasien Rawat Inap (Kamar)</button>
+        <button id="showRawatJalan">Pasien **Rawat Jalan** (Poliklinik)</button>
+        <button id="showRawatInap">Pasien **Rawat Inap** (Kamar)</button>
     </div>
 
     <div class="form-container">
         
-        <!-- Pesan selamat datang default -->
         <div id="welcomeMessage" style="text-align: center; color: #666; padding: 20px;">
             <p>Silakan pilih kategori pasien di atas untuk mengisi formulir.</p>
         </div>
 
-        <!-- FORM RAWAT JALAN -->
         <form id="formRawatJalan" class="hidden" name="submit-to-google-sheet-rj">
             <h2>Formulir Masukan Pelayanan Rawat Jalan</h2>
             
-            <!-- Hidden Input untuk identifikasi di Apps Script -->
             <input type="hidden" name="form_type" value="rawat_jalan">
 
             <div class="form-group">
@@ -287,9 +302,9 @@
                     <option value="Dokter">Pelayanan Dokter</option>
                     <option value="Perawat">Pelayanan Perawat/Asisten</option>
                     <option value="Farmasi">Farmasi/Obat</option>
-                    <option value="poli">pelayanan poli umum</option>
-                    <option value="poli KIA">pelayanan poli KIA</option>
-                    <option value="dokter gigi">pelayanan dokter gigi</option>
+                    <option value="Poli Umum">Pelayanan Poli Umum</option>
+                    <option value="Poli KIA">Pelayanan Poli KIA</option>
+                    <option value="Dokter Gigi">Pelayanan Dokter Gigi</option>
                     <option value="Lainnya">Lainnya</option>
                 </select>
             </div>
@@ -305,20 +320,18 @@
             </div>
 
             <div class="form-group">
-                <label for="rj_saran">saran Anda <span style="color: red;">*</span></label>
-                <input type="text" id="rj_judul" name="judul" placeholder="Cth: Antrian Farmasi Terlalu Lama" required>
+                <label for="rj_saran_judul">Saran Anda (Judul) <span style="color: red;">*</span></label>
+                <input type="text" id="rj_saran_judul" name="judul_masukan" placeholder="Cth: Antrian Farmasi Terlalu Lama" required>
             </div>
 
             <div class="form-group">
-                <label for="rj_kritik">kritik Anda (Maks. 500 Karakter) <span style="color: red;">*</span></label>
-                <textarea id="rj_detail" name="detail" rows="6" maxlength="500" required placeholder="Jelaskan secara spesifik agar kami dapat menindaklanjuti."></textarea>
+                <label for="rj_kritik_detail">Kritik & Detail (Maks. 500 Karakter) <span style="color: red;">*</span></label>
+                <textarea id="rj_kritik_detail" name="detail_masukan" rows="6" maxlength="500" required placeholder="Jelaskan secara spesifik agar kami dapat menindaklanjuti."></textarea>
             </div>
             
-            <!-- Catatan: Upload file dihapus untuk versi Sheets ini karena memerlukan penanganan binary data yang kompleks -->
-
             <div class="form-group">
-                <input type="checkbox" id="rj_anonim" name="anonim">
-                <label for="rj_anonim" style="display: inline; font-weight: normal;">Kirim Masukan Secara *keterangan* (Tidak perlu dihubungi)</label>
+                <input type="checkbox" id="rj_anonim" name="anonim" value="Ya">
+                <label for="rj_anonim" style="display: inline; font-weight: normal;">Kirim Masukan Secara **Anonim** (Tidak perlu dihubungi)</label>
             </div>
             
             <button type="submit" class="btn-submit">
@@ -326,11 +339,9 @@
             </button>
         </form>
 
-        <!-- FORM RAWAT INAP -->
         <form id="formRawatInap" class="hidden" name="submit-to-google-sheet-ri">
             <h2>Formulir Masukan Pelayanan Rawat Inap</h2>
 
-            <!-- Hidden Input untuk identifikasi di Apps Script -->
             <input type="hidden" name="form_type" value="rawat_inap">
             
             <div class="form-group">
@@ -362,21 +373,22 @@
             
             <div class="form-group">
                 <label for="ri_rating">Rating Pelayanan (1=Buruk, 5=Sangat Baik) <span style="color: red;">*</span></label>
-                <input type="number" id="ri_rating" name="rating_perawat" min="1" max="5" placeholder="Masukkan angka 1-5" required>
-            </div>
-             <div class="form-group">
-                <label for="ri_Saran">Saran Anda (Maks. 500 Karakter) <span style="color: red;">*</span></label>
-                <textarea id="ri_saran" name="saran" rows="6" maxlength="500" required placeholder="Jelaskan secara spesifik: shift (pagi/siang/malam), nama petugas (jika tahu)."></textarea>
-             </div>
-            
-            <div class="form-group">
-                <label for="ri_kritik">kritik Anda (Maks. 500 Karakter) <span style="color: red;">*</span></label>
-                <textarea id="ri_kritik" name="ktitik" rows="6" maxlength="500" required placeholder="Jelaskan secara spesifik: shift (pagi/siang/malam), nama petugas (jika tahu)."></textarea>
+                <input type="number" id="ri_rating" name="rating_pelayanan" min="1" max="5" placeholder="Masukkan angka 1-5" required>
             </div>
             
             <div class="form-group">
-                <input type="checkbox" id="ri_keterangan" name="keterangan">
-                <label for="ri_anonim" style="display: inline; font-weight: normal;">Kirim Masukan Secara *keterangan* (Tidak perlu dihubungi)</label>
+                <label for="ri_kritik">Kritik Anda (Maks. 500 Karakter) <span style="color: red;">*</span></label>
+                <textarea id="ri_kritik" name="kritik" rows="6" maxlength="500" required placeholder="Jelaskan spesifik: shift (pagi/siang/malam), nama petugas (jika tahu)."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="ri_saran">Saran Anda (Maks. 500 Karakter) <span style="color: red;">*</span></label>
+                <textarea id="ri_saran" name="saran" rows="6" maxlength="500" required placeholder="Jelaskan usulan perbaikan Anda."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <input type="checkbox" id="ri_anonim" name="anonim" value="Ya">
+                <label for="ri_anonim" style="display: inline; font-weight: normal;">Kirim Masukan Secara **Anonim** (Tidak perlu dihubungi)</label>
             </div>
             
             <button type="submit" class="btn-submit">
@@ -386,7 +398,6 @@
 
     </div>
 
-    <!-- Custom Modal for Success/Error -->
     <div id="statusModal" class="modal-overlay">
         <div class="modal-box">
             <div id="modalIcon" class="modal-icon">✅</div>
@@ -397,7 +408,7 @@
     </div>
 
     <script>
-    // URL Google Apps Script
+    // URL Google Apps Script (pastikan ini benar)
     const scriptURL = 'https://script.google.com/macros/s/AKfycbxmJYE6oWTTuoBmWGNkxdRlIqU_M_Fy2QF9bt0jke9jMaZJsfep4CcefOxtMGEI49MD/exec';
 
     const formRawatJalan = document.getElementById('formRawatJalan');
@@ -409,19 +420,19 @@
 
     // Toggle Form Visibility
     function toggleForm(showRJ) {
+        btnRawatJalan.classList.remove('active');
+        btnRawatInap.classList.remove('active');
         welcomeMessage.style.display = 'none';
 
         if (showRJ) {
             formRawatJalan.classList.remove('hidden');
             formRawatInap.classList.add('hidden');
             btnRawatJalan.classList.add('active');
-            btnRawatInap.classList.remove('active');
             formRawatJalan.scrollIntoView({ behavior: 'smooth' });
         } else {
             formRawatInap.classList.remove('hidden');
             formRawatJalan.classList.add('hidden');
             btnRawatInap.classList.add('active');
-            btnRawatJalan.classList.remove('active');
             formRawatInap.scrollIntoView({ behavior: 'smooth' });
         }
     }
@@ -438,15 +449,16 @@
 
         // Loading State
         btn.disabled = true;
-        btn.innerHTML = 'Mengirim...';
+        btn.innerHTML = '<span class="btn-text">Mengirim...</span>';
 
         fetch(scriptURL, { method: 'POST', body: new FormData(formElement) })
             .then(response => {
-                showModal('success', 'Terima Kasih!', 'Masukan Anda telah kami terima.');
+                showModal('success', 'Terima Kasih!', 'Masukan Anda telah kami terima. Kami akan menindaklanjutinya.');
                 formElement.reset();
             })
             .catch(error => {
-                showModal('error', 'Gagal Mengirim', 'Terjadi kesalahan. Silakan coba lagi.');
+                console.error('Error:', error);
+                showModal('error', 'Gagal Mengirim', 'Terjadi kesalahan saat mengirim data. Silakan coba lagi.');
             })
             .finally(() => {
                 btn.disabled = false;
@@ -463,7 +475,7 @@
         const titleEl = document.getElementById('modalTitle');
         const msgEl = document.getElementById('modalMessage');
 
-        icon.innerText = type === 'success' ? '✅' : '⚠';
+        icon.innerText = type === 'success' ? '✅' : '❌';
         titleEl.style.color = type === 'success' ? 'var(--primary-color)' : 'red';
         titleEl.innerText = title;
         msgEl.innerText = message;
